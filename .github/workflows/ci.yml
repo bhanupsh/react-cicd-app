@@ -37,5 +37,16 @@ jobs:
       - name: Run tests
         run: pnpm run test:ci
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate Snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.MYFIRSTKEY }}
+        run: snyk auth $SNYK_TOKEN
+
+      - name: Run Snyk Security Scan
+        run: snyk test
+
       - name: Build application
         run: pnpm run build
